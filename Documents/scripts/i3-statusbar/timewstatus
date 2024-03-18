@@ -1,0 +1,11 @@
+#!/bin/bash
+
+status=`timew`
+if [ "$status" == "There is no active time tracking." ]; then
+	    echo ""
+    else
+	    echo $status | sed 's/\sStarted.*//' 
+fi
+
+
+

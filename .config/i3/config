@@ -1,0 +1,469 @@
+#######################
+# config starts here: #
+#######################
+
+# Font for window titles. Will also be used by the bar unless a different font is used in the bar {} block below.
+font pango: Noto Sans Regular 10
+
+# set the mod key to the winkey:
+set $mod Mod4
+
+# Monitors
+# You can get the names of your outputs by running: xrandr -q
+set $monitor1	"HDMI-0"
+set $monitor2	"DP-0"
+
+# Terminal
+set $term "alacritty"
+
+#####################
+# workspace layout: #
+#####################
+
+# default i3 tiling mode:
+workspace_layout default
+
+# i3 stacking layout:
+# Each window will be fullscreen and tabbed top to bottom.
+#workspace_layout stacking
+
+# i3 tabbed layout:
+# Each new window will open fullscreen as a tab (left to right)
+#workspace_layout tabbed
+
+##############################
+# extra options for windows: #
+##############################
+#border indicator on windows:
+new_window pixel 2
+
+# thin borders
+# hide_edge_borders both
+
+# Set inner/outer gaps
+gaps inner 6
+gaps outer 3
+
+# show window title bars (not officially supported with i3gaps)
+#default_border normal
+
+# window title alignment
+#title_align center
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+###############################################################################
+# Bindings
+###############################################################################
+
+# switch/iterate between workspaces
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+# switch to workspace
+bindsym $mod+1    workspace  $ws1
+bindsym $mod+2    workspace  $ws2
+bindsym $mod+3    workspace  $ws3
+bindsym $mod+4    workspace  $ws4
+bindsym $mod+5    workspace  $ws5
+bindsym $mod+6    workspace  $ws6
+bindsym $mod+7    workspace  $ws7
+bindsym $mod+8    workspace  $ws8
+bindsym $mod+9    workspace  $ws9
+bindsym $mod+0    workspace  $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1    move container to workspace  $ws1
+bindsym $mod+Shift+2    move container to workspace  $ws2
+bindsym $mod+Shift+3    move container to workspace  $ws3
+bindsym $mod+Shift+4    move container to workspace  $ws4
+bindsym $mod+Shift+5    move container to workspace  $ws5
+bindsym $mod+Shift+6    move container to workspace  $ws6
+bindsym $mod+Shift+7    move container to workspace  $ws7
+bindsym $mod+Shift+8    move container to workspace  $ws8
+bindsym $mod+Shift+9    move container to workspace  $ws9
+bindsym $mod+Shift+0    move container to workspace  $ws10
+
+# resize window (you can also use the mouse for that):
+mode "resize" {
+# These bindings trigger as soon as you enter the resize mode
+# Pressing left will shrink the window's width.
+# Pressing right will grow the window's width.
+# Pressing up will shrink the window's height.
+# Pressing down will grow the window's height.
+    bindsym j resize shrink width 5 or 5 ppt
+    bindsym k resize grow height 5 px or 5 ppt
+    bindsym l resize shrink height 5 px or 5 ppt
+    bindsym ntilde resize grow width 5 px or 5 ppt
+
+# same bindings, but for the arrow keys
+    bindsym Left resize shrink width 5 px or 5 ppt
+    bindsym Down resize grow height 5 px or 5 ppt
+    bindsym Up resize shrink height 5 px or 5 ppt
+    bindsym Right resize grow width 5 px or 5 ppt
+
+# back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+######################################
+# keybindings for different actions: #
+######################################
+
+# move focused workspace between monitors
+bindsym $mod+Ctrl+greater move workspace to output right
+bindsym $mod+Ctrl+less move workspace to output left
+
+# start a terminal
+bindsym $mod+Return exec $term 
+
+# kill focused window
+bindsym $mod+q kill
+
+# exit-menu
+bindsym $mod+Shift+e exec ~/.local/bin/statusbar/powermenu
+
+# Lock the system
+# lock with a picture:
+#bindsym $mod+l exec i3lock -i  ~/.config/i3/i3-lock-screen.png -p default|win -t
+# lock by blurring the screen:
+bindsym $mod+l exec ~/.local/bin/statusbar/blur-lock
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to update i3)
+bindsym $mod+Shift+r restart
+
+# keybinding in fancy rofi (automated):
+bindsym F1 exec ~/.local/bin/statusbar/Keyhint-2
+
+# change focus
+#bindsym $mod+j focus left
+#bindsym $mod+k focus down
+#bindsym $mod+b focus up
+#bindsym $mod+o focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+b move up
+bindsym $mod+Shift+o move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+g layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# open new empty workspace
+bindsym $mod+Shift+n exec ~/.local/bin/statusbar/empty_workspace
+
+# Multimedia Keys
+
+# volume
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%- && pkill -RTMIN+1 i3blocks
+
+# gradular volume control
+bindsym $mod+XF86AudioRaiseVolume exec amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
+bindsym $mod+XF86AudioLowerVolume exec amixer -D pulse sset Master 1%- && pkill -RTMIN+1 i3blocks
+
+# mute
+bindsym XF86AudioMute exec amixer sset Master toggle && killall -USR1 i3blocks
+
+# audio control
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+## App shortcuts
+bindsym $mod+w exec /usr/bin/firefox
+#bindsym $mod+w exec /usr/bin/librewolf
+bindsym $mod+n exec /usr/bin/nemo
+#bindsym Print exec scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
+
+# Power Profiles menu switcher (rofi)
+#bindsym $mod+Shift+p exec ~/.local/bin/statusbar/power-profiles
+
+# Timewarrior
+bindsym $mod+Mod1+g exec timewnotify grammar
+bindsym $mod+Mod1+a exec timewnotify anki
+bindsym $mod+Mod1+r exec timewnotify "youjitsu7 reading"
+bindsym $mod+Mod1+l exec timewnotify listening
+bindsym $mod+Mod1+j exec timewnotify "jlpt reading"
+bindsym $mod+Mod1+n exec timewnotify "reading"
+bindsym $mod+Mod1+w exec timewnotify "output writing"
+bindsym $mod+Mod1+o exec timewnotify "output speaking"
+bindsym $mod+Mod1+s exec timewstop
+
+# Ames
+bindsym $mod+Control+r exec ames -r
+bindsym $mod+Control+s exec ames -s
+
+# OCR
+bindsym $mod+o exec --no-startup-id transformers_ocr recognize
+
+# flameshot (screenshots)
+bindsym Control+Home exec flameshot gui -c -p ~/Pictures/Screenshots
+
+# Emoji selector
+bindsym Control+$mod+e exec dmenuunicode
+#########################################
+# configuration for workspace behaviour: #
+##########################################
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Workspace Monitors
+workspace $ws1		output $monitor1
+workspace $ws2		output $monitor1
+workspace $ws3		output $monitor1
+workspace $ws4		output $monitor1
+workspace $ws5		output $monitor1
+workspace $ws6		output $monitor1
+workspace $ws7		output $monitor1
+workspace $ws8		output $monitor1
+workspace $ws9		output $monitor2
+workspace $ws10		output $monitor2
+
+# bind program to workspace and focus to them on startup:
+assign [class="(?i)firefox"] $ws1
+assign [class="(?i)librewolf"] $ws1
+assign [class="Alacritty"] $ws2
+assign [class="Nemo"] $ws3
+assign [class="Joplin"] $ws4
+assign [class="obsidian"] $ws4
+assign [class="(?i)anki"] $ws5
+assign [class="(?i)libreoffice-calc"] $ws6
+assign [class="(?i)xournalpp"] $ws6
+assign [class="qBittorrent"] $ws7
+
+# automatic set focus new window if it opens on another workspace then the current:
+for_window [class=alacritty] focus
+for_window [class=(?i)firefox] focus
+for_window [class=(?i)librewolf] focus
+for_window [class=Nemo] focus
+for_window [class=libreoffice-calc] focus
+
+##############
+# compositor #
+##############
+
+# transparency
+# picom: https://wiki.archlinux.org/title/Picom
+# manpage: https://man.archlinux.org/man/picom.1.en
+# The default configuration is available in /etc/xdg/picom.conf 
+# For modifications, it can be copied to ~/.config/picom/picom.conf or ~/.config/picom.conf
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+
+#############################################
+# autostart applications/services on login: #
+#############################################
+
+#get auth work with polkit-gnome
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# dex execute .desktop files + apps using /etc/xdg/autostart.
+exec --no-startup-id dex --autostart --environment i3
+
+# start a script to setup displays
+exec --no-startup-id ~/.screenlayout/monitor.sh
+
+# set wallpaper
+exec --no-startup-id nitrogen --set-scaled --random ~/Documents/Wallpapers/ --head=1
+exec --no-startup-id sleep 2 && nitrogen --set-scaled --random ~/Documents/images/sus/ --head=0
+# set powersavings for display:
+exec --no-startup-id xset s 480 dpms 600 600 600
+
+# disable power saving (for example if using xscreensaver)
+#exec --no-startup-id xset -dpms
+
+# xscreensaver
+# https://www.jwz.org/xscreensaver
+#exec --no-startup-id xscreensaver --no-splash
+
+# Screen tearing fix
+exec --no-startup-id nvidia-settings --assign CurrentMetaMode="DPY-1: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}, DPY-2: nvidia-auto-select +2560+0 {ForceCompositionPipeline=On}"
+
+# Desktop notifications
+exec --no-startup-id dbus-launch dunst --config ~/.config/dunst/dunstrc
+
+# autotiling script
+# https://github.com/nwg-piotr/autotiling
+# `yay -S autotiling ;) (it is in AUR)
+#exec_always --no-startup-id autotiling
+
+# Firefox / Librewolf
+exec --no-startup-id sleep 3 && firefox 
+#exec --no-startup-id sleep 3 && librewolf 
+# File manager
+exec --no-startup-id sleep 1 && nemo 
+# Redshift
+exec --no-startup-id redshift
+# Terminal
+exec --no-startup-id $term
+# Japanese input
+exec --no-startup-id fcitx -d
+# Anki
+exec --no-startup-id sleep 8 && anki &
+# Notes
+#exec --no-startup-id sleep 6 && joplin-desktop &
+exec --no-startup-id sleep 6 && obsidian &
+# OCR
+exec --no-startup-id transformers_ocr listen
+###############
+# system tray #
+###############
+# if you do not use dex: exec --no-startup-id dex --autostart --environment i3
+# you need to have tray apps started manually one by one:
+
+# start blueberry app for managing bluetooth devices from tray:
+#exec --no-startup-id blueberry-tray
+
+# networkmanager-applet
+#exec --no-startup-id nm-applet
+
+# clipman-applet
+#exec --no-startup-id xfce4-clipman
+
+##################
+# floating rules #
+##################
+
+# set floating (nontiling) for apps needing it
+for_window [class="Yad" instance="yad"] floating enable
+for_window [class="Galculator" instance="galculator"] floating enable
+for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
+
+# set floating (nontiling) for special apps
+for_window [class="Xsane" instance="xsane"] floating enable
+for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
+for_window [class="qt5ct" instance="qt5ct"] floating enable
+for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
+for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
+for_window [class="Pamac-manager"] floating enable
+for_window [window_role="About"] floating enable
+for_window [class="mpv"] floating enable, move position center, border pixel 3, focus
+for_window [class="advhd.exe"] floating enable, move position center, border pixel 3
+for_window [class="riddlejoker.exe"] floating enable, move position center, border pixel 3
+
+# set border of floating window
+for_window [class="urxvt"] border pixel 1
+
+######################################
+# color settings for bar and windows #
+######################################
+
+# Define colors variables:
+set $darkbluetrans	#08052be6
+set $darkblue		#08052b
+set $lightblue		#5294e2
+set $urgentred		#e53935
+set $white		#ffffff
+set $black		#000000
+set $purple		#e345ff
+set $darkgrey		#383c4a
+set $grey		#b0b5bd
+set $mediumgrey		#8b8b8b
+set $yellowbrown	#e1b700
+set $purple		#ea00ff
+
+# define colors for windows:
+#class		        	border		bground		text		indicator	child_border
+client.focused		    	$purple		$darkblue	$white		$mediumgray	$mediumgrey
+client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
+client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
+client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
+
+############################################
+# bar settings (input comes from i3blocks) #
+############################################
+
+bar {
+    font pango: SauceCodePro Nerd Font 9
+    i3bar_command i3bar
+    output primary
+    position top
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf 
+    strip_workspace_numbers yes
+    tray_output primary
+    workspace_min_width 40
+
+    colors {
+        background #282A36
+        statusline #F8F8F2
+        separator  #44475A
+
+        focused_workspace  #44475A #44475A #F8F8F2
+        active_workspace   #282A36 #44475A #F8F8F2
+        inactive_workspace #282A36 #282A36 #BFBFBF
+        urgent_workspace   #FF5555 #FF5555 #F8F8F2
+        binding_mode       #FF5555 #FF5555 #F8F8F2
+    }
+}
+
+#####################################
+# Application menu handled by rofi: #
+#####################################
+
+## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
+
+bindsym $mod+d exec rofi -modi drun -show drun \
+		-config ~/.config/rofi/rofidmenu.rasi
+
+## rofi bindings for window menu ($mod+t /F10 optional disabled)
+
+bindsym $mod+t exec rofi -show window \
+		-config ~/.config/rofi/rofidmenu.rasi
+
+## rofi bindings to manage clipboard (install rofi-greenclip from the AUR)
+
+#exec --no-startup-id greenclip daemon>/dev/null
+#bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard \
+#		-config ~/.config/rofi/rofidmenu.rasi

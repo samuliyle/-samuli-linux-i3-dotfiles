@@ -1,0 +1,37 @@
+#!/bin/bash
+
+MY_LAT=
+MY_LON=
+OPENWEATHER_KEY=
+
+weather=`curl "https://api.openweathermap.org/data/2.5/weather?lat=${MY_LAT}&lon=${MY_LON}&appid=${OPENWEATHER_KEY}&units=metric"`
+temp=`echo "$weather" | jq -r ".main.temp"`
+cond=`echo "$weather" | jq -r ".weather[0].main"`
+case $cond in
+	Clouds)
+		echo -n ""
+		 ;;
+	Drizzle)
+		echo -n "殺"
+		;;
+	Rain)
+		echo -n ""
+		;;
+	Snow)
+		echo -n "流"
+		;;
+	Mist | Smoke | Haze | Dust | Fog | Sand | Ash | Squall | Tornado)
+		echo -n ""
+		;;
+	Clear)
+		echo -n ""
+		;;
+	Thunderstorm)
+		echo -n ""
+		;;
+	*)
+		echo -n ""
+		;;
+esac
+echo " ${temp}"
+

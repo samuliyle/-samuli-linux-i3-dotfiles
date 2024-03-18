@@ -1,0 +1,27 @@
+#!/bin/bash
+
+readarray -t vids <<<"$(ls | egrep '\.mkv$|\.mp4$' | sort -V)"
+readarray -t subs <<<"$(ls | egrep '\.srt$|\.ass$' | sort -V)"
+subs_length="${#subs[@]}"
+
+for ((i = 0; i < ${#vids[@]} && i < subs_length; ++i)); do
+    video="${vids[$i]}"
+    sub="${subs[$i]}"
+
+    sub_ext=${sub##*.}
+    sub_base=${sub%.*}
+    
+    video_ext=${video##*.}
+    video_base=${video%.*}
+
+    NEW_NAME=`echo "$video_base".$sub_ext`
+    echo "new: $NEW_NAME"
+    if [ "$sub" = "${NEW_NAME}" ]; then
+        echo "  Already ok: $NEW_NAME"
+    elif [ -e "${NEW_NAME}" ]; then
+        echo "  A file named '${NEW_NAME}' already exist, skipping"
+    else
+        mv "$sub" "${NEW_NAME}"
+        echo "  Renamed '$sub' to '${NEW_NAME}'"
+    fi
+done
