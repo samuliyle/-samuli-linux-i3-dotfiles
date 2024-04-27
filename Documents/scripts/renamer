@@ -10,11 +10,11 @@ for ((i = 0; i < ${#vids[@]} && i < subs_length; ++i)); do
 
     sub_ext=${sub##*.}
     sub_base=${sub%.*}
-    
+
     video_ext=${video##*.}
     video_base=${video%.*}
 
-    NEW_NAME=`echo "$video_base".$sub_ext`
+    NEW_NAME=$(echo "$video_base".$sub_ext)
     echo "new: $NEW_NAME"
     if [ "$sub" = "${NEW_NAME}" ]; then
         echo "  Already ok: $NEW_NAME"
