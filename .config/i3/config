@@ -212,8 +212,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 ## App shortcuts
-bindsym $mod+w exec /usr/bin/firefox
-#bindsym $mod+w exec /usr/bin/librewolf
+bindsym $mod+w exec /usr/bin/brave
 bindsym $mod+n exec /usr/bin/nemo
 #bindsym Print exec scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
@@ -243,6 +242,10 @@ bindsym Control+Home exec flameshot gui -c -p ~/Pictures/Screenshots
 
 # Emoji selector
 bindsym Control+$mod+e exec dmenuunicode
+
+# copyq
+bindsym $mod+Shift+f exec --no-startup-id copyq show
+
 #########################################
 # configuration for workspace behaviour: #
 ##########################################
@@ -274,10 +277,9 @@ workspace $ws10		output $monitor2
 
 # bind program to workspace and focus to them on startup:
 assign [class="(?i)firefox"] $ws1
-assign [class="(?i)librewolf"] $ws1
+assign [class="(?i)brave"] $ws1
 assign [class="Alacritty"] $ws2
 assign [class="Nemo"] $ws3
-assign [class="Joplin"] $ws4
 assign [class="obsidian"] $ws4
 assign [class="(?i)anki"] $ws5
 assign [class="(?i)libreoffice-calc"] $ws6
@@ -287,7 +289,7 @@ assign [class="qBittorrent"] $ws7
 # automatic set focus new window if it opens on another workspace then the current:
 for_window [class=alacritty] focus
 for_window [class=(?i)firefox] focus
-for_window [class=(?i)librewolf] focus
+for_window [class=(?i)brave] focus
 for_window [class=Nemo] focus
 for_window [class=libreoffice-calc] focus
 
@@ -316,8 +318,8 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
-exec --no-startup-id nitrogen --set-scaled --random ~/Documents/Wallpapers/ --head=1
-exec --no-startup-id sleep 2 && nitrogen --set-scaled --random ~/Documents/images/sus/ --head=0
+exec --no-startup-id nitrogen --set-auto --random ~/Documents/Wallpapers/ --head=1
+exec --no-startup-id sleep 2 && nitrogen --set-auto --random ~/Documents/Wallpapers/ --head=0
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
 
@@ -339,9 +341,8 @@ exec --no-startup-id dbus-launch dunst --config ~/.config/dunst/dunstrc
 # `yay -S autotiling ;) (it is in AUR)
 #exec_always --no-startup-id autotiling
 
-# Firefox / Librewolf
-exec --no-startup-id sleep 3 && firefox 
-#exec --no-startup-id sleep 3 && librewolf 
+# Browser
+exec --no-startup-id sleep 3 && brave 
 # File manager
 exec --no-startup-id sleep 1 && nemo 
 # Redshift
@@ -353,10 +354,12 @@ exec --no-startup-id fcitx -d
 # Anki
 exec --no-startup-id sleep 8 && anki &
 # Notes
-#exec --no-startup-id sleep 6 && joplin-desktop &
 exec --no-startup-id sleep 6 && obsidian &
 # OCR
 exec --no-startup-id transformers_ocr listen
+# copyq (clipboard manager)
+exec --no-startup-id copyq
+
 ###############
 # system tray #
 ###############
@@ -376,10 +379,17 @@ exec --no-startup-id transformers_ocr listen
 # floating rules #
 ##################
 
+# common pop-up windows
+for_window [window_role="pop-up"]                       floating enable
+for_window [window_role="bubble"]                       floating enable 
+for_window [window_role="task_dialog"]                  floating enable
+for_window [window_role="Preferences"]                  floating enable
+for_window [window_type="dialog"]                       floating enable 
+for_window [window_type="menu"]                         floating enable
+
 # set floating (nontiling) for apps needing it
 for_window [class="Yad" instance="yad"] floating enable
 for_window [class="Galculator" instance="galculator"] floating enable
-for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
 
 # set floating (nontiling) for special apps
 for_window [class="Xsane" instance="xsane"] floating enable
@@ -390,6 +400,9 @@ for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enabl
 for_window [class="Pamac-manager"] floating enable
 for_window [window_role="About"] floating enable
 for_window [class="mpv"] floating enable, move position center, border pixel 3, focus
+for_window [instance="copyq"] floating enable, resize set 1000 600, move position center, border pixel 3, focus
+
+# games
 for_window [class="advhd.exe"] floating enable, move position center, border pixel 3
 for_window [class="riddlejoker.exe"] floating enable, move position center, border pixel 3
 
