@@ -401,6 +401,7 @@ for_window [class="Pamac-manager"] floating enable
 for_window [window_role="About"] floating enable
 for_window [class="mpv"] floating enable, move position center, border pixel 3, focus
 for_window [instance="copyq"] floating enable, resize set 1000 600, move position center, border pixel 3, focus
+for_window [instance="Godot_Engine"] floating enable, move position center, border pixel 3, focus
 
 # games
 for_window [class="advhd.exe"] floating enable, move position center, border pixel 3

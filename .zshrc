@@ -52,9 +52,15 @@ alias copy='cp'
 # Shortcuts
 alias s='$VISUAL'
 
-# Misc. aliases
+# 3-month calendar
+alias cal3='cal -3'
+
 alias editzsh='editbash'
 alias sourcezsh='sourcebash'
+alias neofetch='fastfetch'
+
+# boot errors
+alias error='journalctl -b -p err'
 
 # Simple shortcut to edit this file.
 function editbash() {
